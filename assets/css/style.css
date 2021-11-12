@@ -1,6 +1,6 @@
 :root {
-  --large-font: 1.75rem;
-  --medium-font: 1.5rem; }
+  --large-font: 1.5rem;
+  --medium-font: 1.25rem; }
 
 html, body, ul, li, header, main, div, button, h1, h2, h3, h4, h5, h6, p, span, a {
   margin: 0;
@@ -27,6 +27,9 @@ input {
 .active {
   display: flex !important; }
 
+.hide {
+  display: none !important; }
+
 body, main, section, ul {
   flex-direction: column; }
 
@@ -37,67 +40,71 @@ main {
 header {
   display: grid;
   grid-template-columns: auto auto;
-  width: calc(100% - 2rem);
-  height: 10vh;
+  width: calc(100% - 0.5rem);
+  height: 8vh;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem; }
+  padding: 0 0.25rem; }
   header nav {
     display: flex; }
     header nav button:not(:first-child) {
       margin-left: 0.25rem !important; }
     header nav #menuButton {
-      height: 3.2rem;
-      min-width: 3rem;
+      height: 6vh;
+      width: 6vh;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: var(--large-font);
-      margin: 0;
-      padding: 0 1rem; }
+      margin: 0; }
+  header h1 {
+    font-size: 1rem; }
 
 #breadCrumbs {
   display: grid;
-  grid-template-columns: 50% 50%; }
+  grid-template-columns: 50% 50%;
+  width: 95%;
+  margin: auto; }
   #breadCrumbs #exerciseBack, #breadCrumbs #sectionBack {
-    height: 3.2rem;
-    min-width: 3rem;
+    height: 6vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: var(--large-font);
+    font-size: 1.1rem;
     margin: 0;
     padding: 0 1rem; }
   #breadCrumbs #exerciseBack, #breadCrumbs #sectionBack {
     display: none; }
 
 #menu {
-  height: 90vh;
-  width: calc(100% - 2rem);
-  padding: 0 1rem;
+  height: 92vh;
+  width: 100%;
   position: fixed;
-  top: 10vh;
+  top: 8vh;
   left: 0;
-  background: #eee;
   align-items: center;
   justify-content: center;
   display: none;
-  z-index: 10; }
+  z-index: 10;
+  background: white; }
   #menu div {
-    margin-bottom: 0.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid black;
-    padding: 1rem;
-    width: calc(100% - 2rem); }
+    width: 95%;
+    margin: auto; }
   #menu #clearStorage {
     width: 100%;
     height: 100%;
     padding: 1rem 0; }
+  #menu label, #menu select, #menu input {
+    width: 90%;
+    margin: auto;
+    padding: 0.5rem;
+    font-size: 0.75rem; }
 
 #sectionContainer, #setContainer, #exerciseContainer {
-  outline: 1px black solid;
   height: 100%;
   display: none;
   align-items: center;
@@ -107,24 +114,24 @@ header {
     grid-template-rows: repeat(auto-fill, 1fr);
     min-height: 5vh;
     width: 98%;
-    margin: 2.5rem 0 6rem;
-    outline: 1px solid #4a6073;
-    box-shadow: 0 10px 10px #00000033; }
+    margin: 2.5rem 0 6rem; }
   #sectionContainer a, #setContainer a, #exerciseContainer a {
     align-items: center;
     justify-content: center;
     display: flex;
     outline: 1px solid black;
-    min-height: 6rem;
+    margin-bottom: 0.25rem;
+    box-shadow: 0 0 5px #00000033;
+    height: 10vh;
     text-decoration: none;
     transition: background-color 200ms linear;
     background-color: white;
     font-size: var(--large-font);
     color: blue; }
   #sectionContainer #setHeading, #sectionContainer #setDescription, #setContainer #setHeading, #setContainer #setDescription, #exerciseContainer #setHeading, #exerciseContainer #setDescription {
-    width: calc(100% - 6rem);
+    width: calc(100% - 1.5rem);
     font-size: var(--large-font);
-    padding: 1rem 3rem; }
+    padding: 0.75rem; }
   #sectionContainer #setHeading, #setContainer #setHeading, #exerciseContainer #setHeading {
     padding-bottom: 0; }
   #sectionContainer #setDescription, #setContainer #setDescription, #exerciseContainer #setDescription {
@@ -142,15 +149,15 @@ header {
     padding: 0; }
   #sectionContainer #addExerciseContainer, #sectionContainer #addSetContainer, #setContainer #addExerciseContainer, #setContainer #addSetContainer, #exerciseContainer #addExerciseContainer, #exerciseContainer #addSetContainer {
     height: 35vh;
-    width: 80%;
+    width: calc(98% - 1rem);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
     background: #ddd;
     position: fixed;
-    bottom: -40vh;
+    bottom: -50vh;
     transition: bottom 1s ease-in-out;
     z-index: 9;
     box-shadow: 0 0 2rem black;
@@ -162,50 +169,48 @@ header {
       width: calc(100% - 0.25rem); }
     #sectionContainer #addExerciseContainer input, #sectionContainer #addExerciseContainer button, #sectionContainer #addSetContainer input, #sectionContainer #addSetContainer button, #setContainer #addExerciseContainer input, #setContainer #addExerciseContainer button, #setContainer #addSetContainer input, #setContainer #addSetContainer button, #exerciseContainer #addExerciseContainer input, #exerciseContainer #addExerciseContainer button, #exerciseContainer #addSetContainer input, #exerciseContainer #addSetContainer button {
       width: 100%;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
       display: flex;
       align-self: center;
       text-align: center;
       justify-content: center;
       margin: 0.25rem 0;
-      font-size: var(--medium-font); }
+      font-size: 0.75rem; }
     #sectionContainer #addExerciseContainer.slideIn, #sectionContainer #addSetContainer.slideIn, #setContainer #addExerciseContainer.slideIn, #setContainer #addSetContainer.slideIn, #exerciseContainer #addExerciseContainer.slideIn, #exerciseContainer #addSetContainer.slideIn {
       bottom: 0; }
     #sectionContainer #addExerciseContainer #addExerciseContainer.slideIn #exerciseSlider, #sectionContainer #addExerciseContainer #addSetContainer.slideIn #setSlider, #sectionContainer #addSetContainer #addExerciseContainer.slideIn #exerciseSlider, #sectionContainer #addSetContainer #addSetContainer.slideIn #setSlider, #setContainer #addExerciseContainer #addExerciseContainer.slideIn #exerciseSlider, #setContainer #addExerciseContainer #addSetContainer.slideIn #setSlider, #setContainer #addSetContainer #addExerciseContainer.slideIn #exerciseSlider, #setContainer #addSetContainer #addSetContainer.slideIn #setSlider, #exerciseContainer #addExerciseContainer #addExerciseContainer.slideIn #exerciseSlider, #exerciseContainer #addExerciseContainer #addSetContainer.slideIn #setSlider, #exerciseContainer #addSetContainer #addExerciseContainer.slideIn #exerciseSlider, #exerciseContainer #addSetContainer #addSetContainer.slideIn #setSlider {
       transform: scale(0); }
     #sectionContainer #addExerciseContainer #exerciseSlider, #sectionContainer #addExerciseContainer #setSlider, #sectionContainer #addSetContainer #exerciseSlider, #sectionContainer #addSetContainer #setSlider, #setContainer #addExerciseContainer #exerciseSlider, #setContainer #addExerciseContainer #setSlider, #setContainer #addSetContainer #exerciseSlider, #setContainer #addSetContainer #setSlider, #exerciseContainer #addExerciseContainer #exerciseSlider, #exerciseContainer #addExerciseContainer #setSlider, #exerciseContainer #addSetContainer #exerciseSlider, #exerciseContainer #addSetContainer #setSlider {
       position: absolute;
-      height: 5vh;
-      width: 5vh !important;
+      height: 10vh;
+      width: 10vh !important;
       border-radius: 5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      top: -10vh;
+      top: -25vh;
       z-index: 10;
       box-shadow: 0 0 10px #00000033;
       transform: scale(1);
       transition: transform 100ms ease-in-out; }
   #sectionContainer #setList li, #setContainer #setList li, #exerciseContainer #setList li {
     flex-direction: column;
-    margin: 1rem;
-    padding: 1rem;
-    outline: 1px solid black;
+    margin: 0.5rem;
     align-items: flex-start; }
     #sectionContainer #setList li p, #setContainer #setList li p, #exerciseContainer #setList li p {
       display: flex;
       padding: 0.25rem 0 0.5rem;
+      flex-direction: column;
       width: 100%;
       justify-content: space-between; }
       #sectionContainer #setList li p.complete, #setContainer #setList li p.complete, #exerciseContainer #setList li p.complete {
         opacity: 0.2; }
       #sectionContainer #setList li p .removeSet, #sectionContainer #setList li p .toggleComplete, #setContainer #setList li p .removeSet, #setContainer #setList li p .toggleComplete, #exerciseContainer #setList li p .removeSet, #exerciseContainer #setList li p .toggleComplete {
-        width: 2rem;
+        width: 100%;
         height: 2rem;
         min-height: unset;
-        cursor: pointer; }
-        #sectionContainer #setList li p .removeSet.toggleComplete, #sectionContainer #setList li p .toggleComplete.toggleComplete, #setContainer #setList li p .removeSet.toggleComplete, #setContainer #setList li p .toggleComplete.toggleComplete, #exerciseContainer #setList li p .removeSet.toggleComplete, #exerciseContainer #setList li p .toggleComplete.toggleComplete {
-          margin-right: 1rem; }
+        cursor: pointer;
+        margin-top: 0.25rem; }
         #sectionContainer #setList li p .removeSet:hover, #sectionContainer #setList li p .toggleComplete:hover, #setContainer #setList li p .removeSet:hover, #setContainer #setList li p .toggleComplete:hover, #exerciseContainer #setList li p .removeSet:hover, #exerciseContainer #setList li p .toggleComplete:hover {
           box-shadow: 0 0 1rem black; }
       #sectionContainer #setList li p.complete .removeSet.removeSet, #sectionContainer #setList li p.complete .toggleComplete.removeSet, #setContainer #setList li p.complete .removeSet.removeSet, #setContainer #setList li p.complete .toggleComplete.removeSet, #exerciseContainer #setList li p.complete .removeSet.removeSet, #exerciseContainer #setList li p.complete .toggleComplete.removeSet {
@@ -213,7 +218,11 @@ header {
       #sectionContainer #setList li p.complete .removeSet:hover, #sectionContainer #setList li p.complete .removeSet:disabled, #sectionContainer #setList li p.complete .toggleComplete:hover, #sectionContainer #setList li p.complete .toggleComplete:disabled, #setContainer #setList li p.complete .removeSet:hover, #setContainer #setList li p.complete .removeSet:disabled, #setContainer #setList li p.complete .toggleComplete:hover, #setContainer #setList li p.complete .toggleComplete:disabled, #exerciseContainer #setList li p.complete .removeSet:hover, #exerciseContainer #setList li p.complete .removeSet:disabled, #exerciseContainer #setList li p.complete .toggleComplete:hover, #exerciseContainer #setList li p.complete .toggleComplete:disabled {
         box-shadow: none; }
       #sectionContainer #setList li p div, #setContainer #setList li p div, #exerciseContainer #setList li p div {
-        width: unset; }
+        width: 100%;
+        display: flex;
+        justify-content: center; }
+        #sectionContainer #setList li p div:first-child, #setContainer #setList li p div:first-child, #exerciseContainer #setList li p div:first-child {
+          justify-content: space-between; }
       #sectionContainer #setList li p p:not(:last-of-type), #setContainer #setList li p p:not(:last-of-type), #exerciseContainer #setList li p p:not(:last-of-type) {
         border-bottom: 1px solid black; }
       #sectionContainer #setList li p button, #setContainer #setList li p button, #exerciseContainer #setList li p button {
@@ -222,7 +231,7 @@ header {
         justify-content: center;
         padding: 1rem; }
         #sectionContainer #setList li p button:last-of-type, #setContainer #setList li p button:last-of-type, #exerciseContainer #setList li p button:last-of-type {
-          margin-left: 1rem; }
+          margin-left: 0.05rem; }
       #sectionContainer #setList li p#setTimer.finished #finishRest, #setContainer #setList li p#setTimer.finished #finishRest, #exerciseContainer #setList li p#setTimer.finished #finishRest {
         display: flex; }
       #sectionContainer #setList li p#setTimer.finished div, #sectionContainer #setList li p#setTimer.finished strong, #setContainer #setList li p#setTimer.finished div, #setContainer #setList li p#setTimer.finished strong, #exerciseContainer #setList li p#setTimer.finished div, #exerciseContainer #setList li p#setTimer.finished strong {
@@ -237,5 +246,49 @@ header {
     align-items: center;
     justify-content: center;
     font-size: var(--medium-font); }
+
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    background-color: #111; }
+
+  header {
+    background-color: #004A99;
+    box-shadow: 0 10px 10px #00000033; }
+
+  h1, h2, h3, h4, h5, h6, button, a {
+    color: #eee; }
+
+  a, #menu, input {
+    background: #051923;
+    outline: 1px solid #444;
+    border: none;
+    color: #eee; }
+
+  button {
+    background: #7c7c7c;
+    color: #eee;
+    border: none; }
+
+  input::placeholder, #setDescription {
+    color: #999; }
+
+  a {
+    background-color: #3f3f3f !important;
+    color: #ddd !important; }
+
+  a:hover {
+    background-color: #495867 !important;
+    color: #bdd5ea !important; }
+
+  #setList li {
+    color: #00a6fb; }
+    #setList li p:not(:last-of-type) {
+      border-bottom: 1px solid white; }
+
+  #exerciseContainer #addExerciseContainer, #setContainer #addSetContainer {
+    background-color: #283845; }
+
+  #exerciseContainer, #sectionContainer, #setContainer {
+    outline: none; } }
 
 /*# sourceMappingURL=style.css.map */

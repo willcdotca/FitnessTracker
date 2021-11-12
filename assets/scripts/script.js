@@ -250,7 +250,7 @@ class Gym {
 
   toggleSet(date, set, exercise) {
     const toggleComplete = document.createElement('button');
-    toggleComplete.innerText = '✅';
+    toggleComplete.innerText = 'Complete';
     toggleComplete.classList.add('toggleComplete');
     toggleComplete.dataset.section = this.currentType;
     toggleComplete.dataset.exercise = exercise;
@@ -281,7 +281,7 @@ class Gym {
   removeSet(date, set, exercise) {
 
     const removeSet = document.createElement('button');
-    removeSet.innerText = '❎';
+    removeSet.innerText = 'Remove';
     removeSet.classList.add('removeSet');
 
     removeSet.dataset.section = this.currentType;
@@ -341,8 +341,8 @@ class Gym {
       this.timerCompleted = false;
       this.alarmSound.pause();
       this.alarmSound.currentTime = 0;
-      const next = finish.parentElement.nextElementSibling
-      if(next) next.querySelectorAll('button').forEach(button=>{button.disabled = false})
+      finish.parentElement.previousElementSibling.querySelector('div:last-child').classList.add('hide')
+      finish.parentElement.nextElementSibling.querySelector('.hide').classList.remove('hide')
       finish.parentElement.parentElement.removeChild(finish.parentElement);
       this.sectionBack.disabled = false
       this.exerciseBack.disabled = false
@@ -421,14 +421,14 @@ class Gym {
       this.setList.append(li);
     }
 
-    p.append(strong);
-    p.append(span);
+    let d1 = document.createElement('div')
 
+
+    d1.append(strong);
+    d1.append(span);
+    p.append(d1)
     const d = document.createElement('div');
-    if(set.count > 1) {
-      toggleComplete.disabled = true
-      removeSet.disabled = true
-    }
+    if(set.count > 1) d.classList.add('hide')
     d.appendChild(toggleComplete);
     d.appendChild(removeSet);
     p.appendChild(d);

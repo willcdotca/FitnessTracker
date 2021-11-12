@@ -1,8 +1,7 @@
 :root {
-  --large-font: 1.75rem;
-  --medium-font: 1.5rem;
+  --large-font: 1.5rem;
+  --medium-font: 1.25rem;
 }
-
 
 html, body, ul, li, header, main, div, button, h1, h2, h3, h4, h5, h6, p, span, a {
   margin: 0;
@@ -37,6 +36,9 @@ input {
 .active {
   display: flex !important;
 }
+.hide {
+  display: none !important;
+}
 
 body, main, section, ul {
   flex-direction: column;
@@ -51,31 +53,32 @@ main {
 header {
   display: grid;
   grid-template-columns: auto auto;
-  width: calc(100% - 2rem);
-  height: 10vh;
+  width: calc(100% - 0.5rem);
+  height: 8vh;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 0.25rem;
 
   nav {
     display: flex;
-
     button:not(:first-child) {
       margin-left: 0.25rem !important;
     }
 
     #menuButton {
-      height: 3.2rem;
-      min-width: 3rem;
+      height: 6vh;
+      width: 6vh;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: var(--large-font);
       margin: 0;
-      padding: 0 1rem;
 
     }
 
+  }
+  h1 {
+    font-size: 1rem;
   }
 
 }
@@ -83,14 +86,17 @@ header {
 #breadCrumbs {
   display: grid;
   grid-template-columns: 50% 50%;
+  width: 95%;
+  margin: auto;
+
+
 
   #exerciseBack, #sectionBack {
-    height: 3.2rem;
-    min-width: 3rem;
+    height: 6vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: var(--large-font);
+    font-size: 1.10rem  ;
     margin: 0;
     padding: 0 1rem;
 
@@ -103,26 +109,24 @@ header {
 
 
 #menu {
-  height: 90vh;
-  width: calc(100% - 2rem);
-  padding: 0 1rem;
+  height: 92vh;
+  width: 100%;
   position: fixed;
-  top: 10vh;
+  top: 8vh;
   left: 0;
-  background: #eee;
   align-items: center;
   justify-content: center;
   display: none;
   z-index: 10;
+  background:white;
 
   div {
-    margin-bottom: 0.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid black;
-    padding: 1rem;
-    width: calc(100% - 2rem);
+    width: 95%;
+    margin:auto;
   }
 
   #clearStorage {
@@ -130,12 +134,17 @@ header {
     height: 100%;
     padding: 1rem 0;
   }
+  label, select, input {
+    width:90%;
+    margin:auto;
+    padding:0.5rem;
+    font-size: 0.75rem;
+  }
 
 }
 
 
 #sectionContainer, #setContainer, #exerciseContainer {
-  outline: 1px black solid;
   height: 100%;
   display: none;
   align-items: center;
@@ -147,8 +156,8 @@ header {
     min-height: 5vh;
     width: 98%;
     margin: 2.5rem 0 6rem;
-    outline: 1px solid #4a6073;
-    box-shadow: 0 10px 10px #00000033;
+
+
   }
 
   a {
@@ -156,8 +165,9 @@ header {
     justify-content: center;
     display: flex;
     outline: 1px solid black;
-
-    min-height: 6rem;
+    margin-bottom:0.25rem;
+    box-shadow: 0 0 5px #00000033;
+    height: 10vh;
     text-decoration: none;
     transition: background-color 200ms linear;
     background-color: white;
@@ -167,9 +177,9 @@ header {
 
 
   #setHeading, #setDescription {
-    width: calc(100% - 6rem);
+    width: calc(100% - 1.5rem);
     font-size: var(--large-font);
-    padding: 1rem 3rem;
+    padding: 0.75rem;
 
   }
 
@@ -203,15 +213,15 @@ header {
 
   #addExerciseContainer, #addSetContainer {
     height: 35vh;
-    width: 80%;
+    width: calc(98% - 1rem);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
     background: #ddd;
     position: fixed;
-    bottom: -40vh;
+    bottom: -50vh;
     transition: bottom 1s ease-in-out;
     z-index: 9;
     box-shadow: 0 0 2rem black;
@@ -226,13 +236,13 @@ header {
 
     & input, & button {
       width: 100%;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
       display: flex;
       align-self: center;
       text-align: center;
       justify-content: center;
       margin: 0.25rem 0;
-      font-size: var(--medium-font);
+      font-size: 0.75rem;
     }
 
     &.slideIn {
@@ -245,13 +255,13 @@ header {
 
     #exerciseSlider, #setSlider {
       position: absolute;
-      height: 5vh;
-      width: 5vh !important;
+      height: 10vh;
+      width: 10vh !important;
       border-radius: 5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      top: -10vh;
+      top: -25vh;
       z-index: 10;
       box-shadow: 0 0 10px #00000033;
       transform: scale(1);
@@ -262,14 +272,15 @@ header {
   #setList {
     li {
       flex-direction: column;
-      margin: 1rem;
-      padding: 1rem;
-      outline: 1px solid black;
+      margin: 0.5rem;
+
+
       align-items: flex-start;
 
       p {
         display: flex;
         padding: 0.25rem 0 0.5rem;
+        flex-direction: column;
         width: 100%;
         justify-content: space-between;
 
@@ -279,14 +290,12 @@ header {
 
 
         .removeSet, .toggleComplete {
-          width: 2rem;
+          width: 100%;
           height: 2rem;
           min-height: unset;
           cursor: pointer;
+          margin-top:0.25rem;
 
-          &.toggleComplete {
-            margin-right: 1rem;
-          }
 
           &:hover {
             box-shadow: 0 0 1rem black;
@@ -308,7 +317,13 @@ header {
 
 
         div {
-          width: unset;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          &:first-child{
+            justify-content: space-between;
+          }
+
         }
 
         p:not(:last-of-type) {
@@ -322,7 +337,7 @@ header {
           padding: 1rem;
 
           &:last-of-type {
-            margin-left: 1rem;
+            margin-left: 0.05rem;
           }
         }
 
@@ -359,68 +374,66 @@ header {
 }
 
 
-//@media screen and (prefers-color-scheme: dark) {
-//  body {
-//    background-color: #111;
-//  }
-//  header {
-//    background-color: #004A99;
-//    box-shadow: 0 10px 10px #00000033;
-//  }
-//
-//  h1, h2, h3, h4, h5, h6, button, a {
-//    color: #eee;
-//  }
-//  a, #menu, input {
-//    background: #051923;
-//    outline: 1px solid #444;
-//    border: none;
-//    color: #eee;
-//
-//  }
-//
-//  button {
-//    background: #7c7c7c;
-//    color: #eee;
-//    border: none
-//  }
-//
-//  input::placeholder, #setDescription {
-//    color: #999;
-//  }
-//  a {
-//    background-color: #3f3f3f !important;
-//    color: #ddd !important;
-//
-//  }
-//  a:hover {
-//    background-color: #495867 !important;
-//    color: #bdd5ea !important;
-//
-//  }
-//
-//  #setList li {
-//    background-color: #051923;
-//    color: #00a6fb;
-//
-//    p:not(:last-of-type) {
-//      border-bottom: 1px solid white;
-//    }
-//
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    background-color: #111;
+  }
+  header {
+    background-color: #004A99;
+    box-shadow: 0 10px 10px #00000033;
+  }
 
-//  }
-//
-//
+  h1, h2, h3, h4, h5, h6, button, a {
+    color: #eee;
+  }
+  a, #menu, input {
+    background: #051923;
+    outline: 1px solid #444;
+    border: none;
+    color: #eee;
 
-//
-//  #addExerciseContainer, #addSetContainer {
-//    background-color: #283845;
-//
-//  }
-//
-//
-//  #exerciseContainer, #sectionContainer, #setContainer {
-//    outline: none;
-//
-//  }
-//}
+  }
+
+  button {
+    background: #7c7c7c;
+    color: #eee;
+    border: none
+  }
+
+  input::placeholder, #setDescription {
+    color: #999;
+  }
+  a {
+    background-color: #3f3f3f !important;
+    color: #ddd !important;
+
+  }
+  a:hover {
+    background-color: #495867 !important;
+    color: #bdd5ea !important;
+
+  }
+
+  #setList li {
+    color: #00a6fb;
+
+    p:not(:last-of-type) {
+      border-bottom: 1px solid white;
+    }
+
+
+  }
+
+
+
+
+  #exerciseContainer #addExerciseContainer,#setContainer #addSetContainer {
+    background-color: #283845;
+
+  }
+
+
+  #exerciseContainer, #sectionContainer, #setContainer {
+    outline: none;
+  }
+}
