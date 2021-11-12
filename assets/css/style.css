@@ -11,6 +11,12 @@ h1, h2, h3, h4, h5, h6, button, a {
 ul, li, header, main, div {
   display: flex; }
 
+button:hover {
+  background:#004A99;
+}
+button:active {
+  background: #00792f;
+}
 html, body, ul {
   width: 100%; }
 
@@ -93,7 +99,7 @@ h1 {
   width: 100%;
   min-height: 6rem;
   text-decoration: none;
-  transition: background-color 200ms linear;
+  transition: background-color 50ms linear;
   background-color: white;
   font-size: 2rem;
   color: blue; }
@@ -113,7 +119,7 @@ h1 {
   background: #ddd;
   position: fixed;
   bottom: -40vh;
-  transition: bottom 1s ease-in-out;
+  transition: bottom 100ms ease-in-out;
   z-index: 9;
   box-shadow: 0 0 2rem black;
   outline: 1px solid white; }
@@ -190,6 +196,17 @@ input {
   width: calc(100% - 1.5rem);
   justify-content: space-between; }
 
+#setList p.timer {
+  align-items: center;
+}
+#setList p button:last-of-type{
+  margin-left:1rem;
+}
+
+#setList p.complete {
+  opacity: 0.1;
+}
+
 #setList li p:not(:last-of-type) {
   border-bottom: 1px solid black; }
 
@@ -198,6 +215,26 @@ input {
   align-items: center;
   justify-content: center;
   padding: 1rem; }
+
+#setList a.toggleComplete {
+  height:1rem;
+  width:1rem;
+  border:1px solid deeppink !important;
+  background:lightcoral !important;
+}
+
+#setList a.toggleComplete {
+  border:1px solid gray !important;
+  background:lightgray !important;
+}
+
+#setList a.removeSet {
+  height:1rem;
+  width:1rem;
+  border:1px solid red !important;
+  background:firebrick !important;
+}
+
 
 #emptyExercises, #emptySets {
   margin: 1rem;

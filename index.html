@@ -28,9 +28,15 @@
         <label for="darkMode">Dark Mode
             <input type="checkbox" id="darkMode" />
         </label>
-        <label for="clearStorage">
-            <button id="clearStorage" >Clear LocalStorage </button>
+        <label for="weightType">
+            <select name="weightType" id="weightType">
+                <option value="kgs" selected>KG</option>
+                <option value="lbs">LG</option>
+            </select>
         </label>
+
+            <button id="clearStorage" >Clear LocalStorage </button>
+
     </section>
 
     <section id="sectionContainer" class="active">
@@ -79,7 +85,7 @@
             <button id="setSlider">+</button>
 
             <input type="number" placeholder="How Many Reps?" id="setReps"/>
-            <input type="text" class="weight" placeholder="How Much Weight?" id="setWeight"/>
+            <input type="number" class="weight" placeholder="How Much Weight?" id="setWeight"/>
             <input type="date" class="date" id="setDate"/>
             <div>
                 <button id="addSetButton">Add</button>
@@ -99,10 +105,10 @@
 
 <!--
 //TODO Sort By Date
-//TODO Delete & Update Set
 //TODO Add Dark/Light Theme Override Toggle - https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/
 //TODO Clean up SCSS/CSS
 //TODO Style Menu Content
+//TODO Update Set/Rest Counter
 
 -->
 

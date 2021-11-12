@@ -1,13 +1,18 @@
 class Gym {
   constructor() {
     this.data = {};
+    this.defaultCurrentTime = 9000
+    this.currentTime = this.defaultCurrentTime
+    this.timerCompleted = false
+    this.weightType = document.getElementById('weightType')
 
     this.menu = document.getElementById('menu');
     this.sectionBack = document.getElementById('sectionBack');
     this.menuButton = document.getElementById('menuButton');
     this.exerciseBack = document.getElementById('exerciseBack');
-    this.exerciseSlider = document.getElementById("exerciseSlider")
-    this.setSlider = document.getElementById("setSlider")
+    this.exerciseSlider = document.getElementById('exerciseSlider');
+    this.setSlider = document.getElementById('setSlider');
+    this.clearStorage = document.getElementById('clearStorage');
 
     //Sections (main menu)
     this.sectionContainer = document.getElementById('sectionContainer');
@@ -49,48 +54,49 @@ class Gym {
 
   init() {
     this.sectionBack.addEventListener('click', () => {
-      this.sectionBack.classList.remove('active')
-      this.exerciseBack.classList.remove('active')
+      this.sectionBack.classList.remove('active');
+      this.exerciseBack.classList.remove('active');
       this.showContainer(this.sectionContainer);
     });
 
-    this.setSlider.addEventListener('click',()=>{
-      this.addSetContainer.classList.toggle('slideIn')
-
+    this.weightType.addEventListener('change',ev=>{
 
     })
-    this.exerciseSlider.addEventListener('click',()=>{
-      this.addExerciseContainer.classList.toggle('slideIn')
-    })
 
-    this.cancelExerciseButton.addEventListener('click',()=>{
-      this.addExerciseContainer.classList.toggle('slideIn')
-    })
-    this.cancelSetButton.addEventListener('click',()=>{
-      this.addSetContainer.classList.toggle('slideIn')
-    })
+    this.setSlider.addEventListener('click', () => {
+      this.addSetContainer.classList.toggle('slideIn');
 
+    });
+    this.exerciseSlider.addEventListener('click', () => {
+      this.addExerciseContainer.classList.toggle('slideIn');
+    });
+
+    this.cancelExerciseButton.addEventListener('click', () => {
+      this.addExerciseContainer.classList.toggle('slideIn');
+    });
+    this.cancelSetButton.addEventListener('click', () => {
+      this.addSetContainer.classList.toggle('slideIn');
+    });
 
     this.exerciseBack.addEventListener('click', () => {
-      this.exerciseBack.classList.remove('active')
-      this.loadExercises(this.currentType)
+      this.exerciseBack.classList.remove('active');
+      this.loadExercises(this.currentType);
       this.showContainer(this.exerciseContainer);
     });
 
-    this.menuButton.addEventListener('click',ev=>{
-      this.menu.classList.toggle('active')
-      const isActive = this.menu.classList.contains('active')
-      this.sectionBack.disabled = isActive
-      this.exerciseBack.disabled = isActive
+    this.menuButton.addEventListener('click', ev => {
+      this.menu.classList.toggle('active');
+      const isActive = this.menu.classList.contains('active');
+      this.sectionBack.disabled = isActive;
+      this.exerciseBack.disabled = isActive;
 
-
-    })
+    });
 
     this.sectionButtons.forEach(el => {
       this.loadSection(el.id);
       el.addEventListener('click', () => {
         this.currentType = el.id;
-        this.sectionBack.classList.add('active')
+        this.sectionBack.classList.add('active');
         this.showContainer(this.exerciseContainer);
         this.loadExercises(el.id);
       });
@@ -98,28 +104,52 @@ class Gym {
 
     this.exerciseButton.addEventListener('click', () => this.addExercise());
     this.addSetButton.addEventListener('click', () => this.addSet());
+    this.clearStorage.addEventListener('click', () => {
+      const confirmed = confirm('Are you sure you want to remove ALL data?');
+      if (confirmed) {
+        console.log('clear');
+        localStorage.clear();
+        window.location.reload();
+      }
+    });
   }
 
   loadSection(sectionName) {
     const sectionStorage = localStorage.getItem(sectionName);
-    this.data[sectionName] = sectionStorage !== null ? JSON.parse(sectionStorage) : {exercises: {}};
+    this.data[sectionName] = sectionStorage !== null ?
+        JSON.parse(sectionStorage) :
+        {exercises: {}};
   }
 
   saveData(name) {
+
     localStorage.setItem(name, JSON.stringify(this.data[name]));
   }
 
   formatSetDate(date) {
-    date = date ? new Date(date) : new Date()
+    date = date ? new Date(date) : new Date();
 
-    return `${date.getUTCFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().
+    return `${date.getUTCFullYear()}-${(date.getMonth() + 1).toString().
+        padStart(2, '0')}-${date.getUTCDate().
         toString().
         padStart(2, '0')}`;
   }
 
   formatDisplayDate(date) {
     let split = date.split('-');
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec'];
     const cleanDate = new Date(split[0], split[1] - 1, split[2]);
     return `${months[cleanDate.getMonth()]} ${cleanDate.getUTCDate()}, ${cleanDate.getUTCFullYear()}`;
   }
@@ -149,9 +179,10 @@ class Gym {
   }
 
   addExercise() {
-    if(!this.exerciseName.value) return
+    if (!this.exerciseName.value) return;
 
-    this.data[this.currentType].exercises[this.cleanName(this.exerciseName.value)] = {
+    this.data[this.currentType].exercises[this.cleanName(
+        this.exerciseName.value)] = {
       name: this.exerciseName.value,
       description: this.exerciseDescription.value,
       video: this.exerciseVideo.value.length ? this.exerciseVideo.value : false,
@@ -174,7 +205,7 @@ class Gym {
 
     a.addEventListener('click', () => {
       this.setContainer.dataset.exercise = this.cleanName(name);
-      this.exerciseBack.classList.add('active')
+      this.exerciseBack.classList.add('active');
       this.showContainer(this.setContainer);
       this.loadSets(name);
     });
@@ -190,7 +221,9 @@ class Gym {
     let currentExercise = this.data[this.currentType].exercises[exercise];
     let dates = currentExercise.sets;
 
-    !Object.values(dates).length ? this.emptySets.classList.add('active') : this.emptySets.classList.remove('active');
+    !Object.values(dates).length ?
+        this.emptySets.classList.add('active') :
+        this.emptySets.classList.remove('active');
 
     this.setDate.value = this.formatSetDate();
     this.exercisesList.innerHTML = '';
@@ -204,89 +237,192 @@ class Gym {
 
     for (let date in dates) {
       for (let set in dates[date]) {
-        this.generateSet(date, dates[date][set]);
+        this.generateSet(date, dates[date][set], exercise);
       }
     }
   }
 
-  generateSet(date, set) {
-    const currentDate = document.getElementById(date);
-    const li = document.createElement('li');
+  toggleSet(date, set, exercise) {
 
+    const toggleComplete = document.createElement('a');
+    toggleComplete.classList.add('toggleComplete');
+    toggleComplete.dataset.section = this.currentType;
+    toggleComplete.dataset.exercise = exercise;
+    toggleComplete.dataset.date = date;
+    toggleComplete.dataset.count = set.count;
+
+    if (set.complete) toggleComplete.classList.add('complete');
+    toggleComplete.addEventListener('click', ev => {
+      if(this.timerCompleted) return
+      const link = ev.target;
+      let completed = this.data[link.dataset.section].exercises[link.dataset.exercise].sets[link.dataset.date][parseInt(
+          link.dataset.count) - 1];
+      completed.complete = !completed.complete;
+
+
+      if (!completed.complete) {
+        toggleComplete.parentElement.classList.remove('complete');
+      } else {
+        toggleComplete.parentElement.classList.add('complete');
+        toggleComplete.parentElement.after(this.createTimer())
+      }
+
+      this.saveData(this.currentType);
+
+    });
+    return toggleComplete;
+  }
+
+  removeSet(date, set, exercise) {
+
+    const removeSet = document.createElement('a');
+    removeSet.classList.add('removeSet');
+
+    removeSet.dataset.section = this.currentType;
+    removeSet.dataset.exercise = exercise;
+    removeSet.dataset.date = date;
+    removeSet.dataset.count = set.count;
+    removeSet.addEventListener('click', ev => {
+      if(this.timerCompleted) return
+      const link = ev.target;
+      if (link.parentElement.classList.contains('complete')) return;
+      let response = confirm('Are you sure you want to delete this set?');
+
+      if (response) {
+        this.data[link.dataset.section].exercises[link.dataset.exercise].sets[link.dataset.date].splice(
+            parseInt(link.dataset.count) - 1, 1);
+        this.data[link.dataset.section].exercises[link.dataset.exercise].sets[link.dataset.date].map(
+            (a, b) => {
+              a.count = b + 1;
+              return a;
+            });
+
+        this.saveData(link.dataset.section);
+        removeSet.parentElement.parentElement.removeChild(
+            removeSet.parentElement);
+        this.loadSets();
+
+      }
+    });
+    return removeSet;
+  }
+
+  createTimer() {
+    this.timerCompleted = true
+    let p = document.createElement('p');
+    p.classList.add('timer')
+
+    let div = document.createElement('div')
+    let strong = document.createElement('strong')
+
+    strong.innerText = `Rest Remaining: ${this.currentTime/1000}s`
+
+    let reset = document.createElement('button');
+    reset.id = 'resetTimer';
+    reset.innerHTML = 'Restart Rest';
+
+    let pause = document.createElement('button');
+    pause.innerHTML = 'Pause Rest';
+    pause.id = 'pauseTimer';
+
+    pause.addEventListener('click', ev => {
+      if (this.activeTimer) {
+        clearInterval(this.activeTimer);
+        this.activeTimer = false
+        pause.innerHTML = 'Start';
+      } else {
+        console.log('rerunning pause')
+        pause.innerHTML = 'Pause Rest';
+        this.beginTimer(strong)
+
+      }
+    });
+
+    reset.addEventListener('click', () => {
+        clearInterval(this.activeTimer);
+        this.activeTimer = false;
+        this.currentTime = this.defaultCurrentTime
+        strong.innerText = `Rest Remaining: ${this.currentTime/1000}s`
+        pause.innerHTML = 'Start';
+
+    });
+    p.append(strong);
+    div.append(reset);
+    div.append(pause);
+    p.append(div)
+    this.beginTimer(strong)
+
+
+    return p;
+  }
+
+
+  beginTimer(strong){
+    this.activeTimer = setInterval(() => {
+      if (this.currentTime === 0) {
+        strong.parentElement.parentElement.removeChild(strong.parentElement)
+        this.alarmSound.currentTime = 0;
+        this.alarmSound.play();
+        clearInterval(this.activeTimer);
+        this.activeTimer = false;
+        this.timerCompleted = false
+        return;
+      }
+      this.currentTime -= 1000;
+      strong.innerHTML = `Rest Remaining: ${this.currentTime/1000}s`
+
+
+    }, 1000);
+  }
+
+
+  generateSet(date, set, exercise) {
+    const currentDate = document.getElementById(date);
+    const li = document.getElementById(date) ?? document.createElement('li');
     const p = document.createElement('p');
 
     const strong = document.createElement('strong');
     strong.innerText = `Set ${set.count}`;
     const span = document.createElement('span');
-    span.innerText = `${set.reps} x ${set.weight}lbs`;
+    span.innerText = `${set.reps} x ${set.weight}${this.weightType.value}`;
+
+    const toggleComplete = this.toggleSet(date, set, exercise);
+    const removeSet = this.removeSet(date, set, exercise);
+
+    !set.complete ?
+        p.classList.remove('complete') :
+        p.classList.add('complete');
 
     if (!currentDate) {
       li.id = date;
-
-      const h3 = document.createElement('h3')
-
+      const h3 = document.createElement('h3');
       h3.innerText = this.formatDisplayDate(date);
-
-      let timer = document.createElement('button');
-      timer.innerHTML = 'Begin Rest';
-
-      timer.addEventListener('click', () => {
-
-        if (!this.alarmSound.paused) {
-          this.alarmSound.pause();
-          timer.disabled = true;
-          timer.innerText = 'Rest Complete';
-          return;
-        }
-
-        if (this.activeTimer) {
-          clearInterval(this.activeTimer);
-          timer.innerHTML = 'Begin Rest';
-          this.activeTimer = false;
-        } else {
-          timer.innerHTML = '90 seconds remaining';
-          let currentTime = 9000;
-          this.activeTimer = setInterval(() => {
-            if (currentTime === 0) {
-              this.alarmSound.currentTime = 0;
-              this.alarmSound.play();
-              clearInterval(this.activeTimer);
-              this.activeTimer = false;
-              return;
-            }
-            currentTime -= 1000;
-            timer.innerHTML = `${Math.floor(currentTime / 1000)} seconds remaining`;
-
-          }, 1000);
-        }
-      });
-      p.append(strong);
-      p.append(span);
       li.append(h3);
       li.append(p);
-      li.append(timer);
       this.setList.append(li);
-
-    } else {
-      p.append(strong);
-      p.append(span);
-      currentDate.querySelector('button').before(p);
-
     }
+
+    p.append(strong);
+    p.append(span);
+    p.appendChild(toggleComplete);
+    p.appendChild(removeSet);
+    li.append(p);
+
 
   }
 
   addSet() {
-    if(!this.setReps.value || !this.setWeight.value) return
+    if (!this.setReps.value || !this.setWeight.value) return;
     const exercises = this.data[this.currentType].exercises[this.setContainer.dataset.exercise];
 
     const setDate = this.formatSetDate(this.setDate.value);
     if (!exercises.sets.hasOwnProperty(setDate)) exercises.sets[setDate] = [];
 
+    const count = exercises.sets[setDate].length + 1 || 1;
     let single = {
       reps: this.setReps.value,
       weight: this.setWeight.value,
-      count: exercises.sets[setDate].length + 1 || 1,
+      count: count,
       complete: false,
     };
 
@@ -294,14 +430,13 @@ class Gym {
 
     this.saveData(this.currentType);
     this.emptySets.classList.remove('active');
-    this.generateSet(setDate, single);
+    this.generateSet(setDate, single, this.setContainer.dataset.exercise);
   }
+
 }
 
 let gym = new Gym();
 gym.init();
-
-
 
 if (!window.location.origin.includes('localhost')) {
   if ('serviceWorker' in navigator) {
