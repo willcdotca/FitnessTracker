@@ -1,6 +1,6 @@
 :root {
-  --large-font: 3rem;
-  --medium-font: 2.5rem; }
+  --large-font: 1.5rem;
+  --medium-font: 1.05rem; }
 
 html, body, ul, li, header, main, div, button, h1, h2, h3, h4, h5, h6, p, span, a {
   margin: 0;
@@ -46,7 +46,7 @@ header {
     display: flex; }
     header nav button:not(:first-child) {
       margin-left: 0.25rem !important; }
-    header nav #exerciseBack, header nav #sectionBack, header nav #menuButton {
+    header nav #menuButton {
       height: 3.2rem;
       min-width: 3rem;
       display: flex;
@@ -55,8 +55,21 @@ header {
       font-size: var(--large-font);
       margin: 0;
       padding: 0 1rem; }
-    header nav #exerciseBack, header nav #sectionBack {
-      display: none; }
+
+#breadCrumbs {
+  display: grid;
+  grid-template-columns: 50% 50%; }
+  #breadCrumbs #exerciseBack, #breadCrumbs #sectionBack {
+    height: 3.2rem;
+    min-width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--large-font);
+    margin: 0;
+    padding: 0 1rem; }
+  #breadCrumbs #exerciseBack, #breadCrumbs #sectionBack {
+    display: none; }
 
 #menu {
   height: 90vh;

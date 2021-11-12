@@ -1,6 +1,7 @@
+
 :root {
-  --large-font: 3rem;
-  --medium-font: 2.5rem;
+  --large-font: 1.5rem;
+  --medium-font: 1.05rem;
 }
 
 
@@ -20,8 +21,6 @@ h1, h2, h3, h4, h5, h6, button, a {
     font-size: var(--large-font);
   }
 }
-
-
 
 
 ul, li, header, main, div {
@@ -66,7 +65,7 @@ header {
       margin-left: 0.25rem !important;
     }
 
-    #exerciseBack, #sectionBack, #menuButton {
+    #menuButton {
       height: 3.2rem;
       min-width: 3rem;
       display: flex;
@@ -78,11 +77,29 @@ header {
 
     }
 
-    #exerciseBack, #sectionBack {
-      display: none;
-    }
   }
 
+}
+
+#breadCrumbs {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  #exerciseBack, #sectionBack {
+    height: 3.2rem;
+    min-width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--large-font);
+    margin: 0;
+    padding: 0 1rem;
+
+  }
+
+  #exerciseBack, #sectionBack {
+    display: none;
+  }
 }
 
 
@@ -108,10 +125,11 @@ header {
     padding: 1rem;
     width: calc(100% - 2rem);
   }
+
   #clearStorage {
-    width:100%;
-    height:100%;
-    padding:1rem 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0;
   }
 
 }
@@ -266,19 +284,23 @@ header {
           height: 2rem;
           min-height: unset;
           cursor: pointer;
+
           &.toggleComplete {
-            margin-right:1rem;
+            margin-right: 1rem;
           }
+
           &:hover {
             box-shadow: 0 0 1rem black;
           }
 
         }
+
         &.complete {
           .removeSet, .toggleComplete {
             &.removeSet {
               cursor: not-allowed;
             }
+
             &:hover, &:disabled {
               box-shadow: none;
             }
@@ -318,7 +340,6 @@ header {
         }
 
       }
-
 
 
     }
