@@ -1,24 +1,24 @@
 class Gym {
   constructor() {
     this.data = {};
-    this.defaultCurrentTime = 9000
-    this.currentTime = this.defaultCurrentTime
-    this.timerCompleted = false
-    this.weightType = document.getElementById('weightType')
 
+    this.currentTime = 0;
+
+    // #menu
+    this.weightType = document.getElementById('weightType');
+    this.restingDefault = document.getElementById('restingDefault');
     this.menu = document.getElementById('menu');
-    this.sectionBack = document.getElementById('sectionBack');
     this.menuButton = document.getElementById('menuButton');
-    this.exerciseBack = document.getElementById('exerciseBack');
-    this.exerciseSlider = document.getElementById('exerciseSlider');
-    this.setSlider = document.getElementById('setSlider');
     this.clearStorage = document.getElementById('clearStorage');
 
     //Sections (main menu)
+    this.sectionBack = document.getElementById('sectionBack');
     this.sectionContainer = document.getElementById('sectionContainer');
     this.sectionButtons = this.sectionContainer.querySelectorAll('a');
 
     //Exercises
+    this.exerciseBack = document.getElementById('exerciseBack');
+    this.exerciseSlider = document.getElementById('exerciseSlider');
     this.exerciseContainer = document.getElementById('exerciseContainer');
     this.exercisesList = document.getElementById('exercisesList');
     this.exerciseButton = document.getElementById('addExercise');
@@ -39,15 +39,15 @@ class Gym {
     this.setWeight = document.getElementById('setWeight');
     this.setDate = document.getElementById('setDate');
     this.setList = document.getElementById('setList');
+    this.setSlider = document.getElementById('setSlider');
     this.emptySets = document.getElementById('emptySets');
     this.addSetContainer = document.getElementById('addSetContainer');
     this.cancelSetButton = document.getElementById('cancelSetButton');
-
+    this.alarmSound = document.getElementById('alarmSound');
     this.currentContainer = this.sectionContainer;
     this.parentContainer = false;
     this.currentType = false;
-
-    this.alarmSound = document.getElementById('alarmSound');
+    this.timerCompleted = false;
     this.activeTimer = false;
 
   }
@@ -59,23 +59,29 @@ class Gym {
       this.showContainer(this.sectionContainer);
     });
 
-    this.weightType.addEventListener('change',ev=>{
-
-    })
+    this.currentTime = this.restingDefault.value * 60 * 1000;
+    this.restingDefault.addEventListener('change', ev => {
+      this.currentTime = this.restingDefault.value * 60 * 1000;
+    });
 
     this.setSlider.addEventListener('click', () => {
       this.addSetContainer.classList.toggle('slideIn');
+      this.setSlider.innerText = this.addSetContainer.classList.contains('slideIn') ? '-' : '+'
+
 
     });
     this.exerciseSlider.addEventListener('click', () => {
       this.addExerciseContainer.classList.toggle('slideIn');
+      this.exerciseSlider.innerText = this.addExerciseContainer.classList.contains('slideIn') ? '-' : '+'
     });
 
     this.cancelExerciseButton.addEventListener('click', () => {
       this.addExerciseContainer.classList.toggle('slideIn');
+      this.exerciseSlider.innerText = '+'
     });
     this.cancelSetButton.addEventListener('click', () => {
       this.addSetContainer.classList.toggle('slideIn');
+      this.setSlider.innerText = '+'
     });
 
     this.exerciseBack.addEventListener('click', () => {
@@ -243,8 +249,8 @@ class Gym {
   }
 
   toggleSet(date, set, exercise) {
-
     const toggleComplete = document.createElement('a');
+    toggleComplete.innerText = '✅';
     toggleComplete.classList.add('toggleComplete');
     toggleComplete.dataset.section = this.currentType;
     toggleComplete.dataset.exercise = exercise;
@@ -253,18 +259,17 @@ class Gym {
 
     if (set.complete) toggleComplete.classList.add('complete');
     toggleComplete.addEventListener('click', ev => {
-      if(this.timerCompleted) return
+      if (this.timerCompleted) return;
       const link = ev.target;
       let completed = this.data[link.dataset.section].exercises[link.dataset.exercise].sets[link.dataset.date][parseInt(
           link.dataset.count) - 1];
       completed.complete = !completed.complete;
 
-
       if (!completed.complete) {
-        toggleComplete.parentElement.classList.remove('complete');
+        toggleComplete.parentElement.parentElement.classList.remove('complete');
       } else {
-        toggleComplete.parentElement.classList.add('complete');
-        toggleComplete.parentElement.after(this.createTimer())
+        toggleComplete.parentElement.parentElement.classList.add('complete');
+        toggleComplete.parentElement.parentElement.after(this.createTimer());
       }
 
       this.saveData(this.currentType);
@@ -276,6 +281,7 @@ class Gym {
   removeSet(date, set, exercise) {
 
     const removeSet = document.createElement('a');
+    removeSet.innerText = '❎';
     removeSet.classList.add('removeSet');
 
     removeSet.dataset.section = this.currentType;
@@ -283,9 +289,10 @@ class Gym {
     removeSet.dataset.date = date;
     removeSet.dataset.count = set.count;
     removeSet.addEventListener('click', ev => {
-      if(this.timerCompleted) return
+      if (this.timerCompleted) return;
       const link = ev.target;
-      if (link.parentElement.classList.contains('complete')) return;
+      if (link.parentElement.parentElement.classList.contains(
+          'complete')) return;
       let response = confirm('Are you sure you want to delete this set?');
 
       if (response) {
@@ -298,8 +305,8 @@ class Gym {
             });
 
         this.saveData(link.dataset.section);
-        removeSet.parentElement.parentElement.removeChild(
-            removeSet.parentElement);
+        removeSet.parentElement.parentElement.parentElement.removeChild(
+            removeSet.parentElement.parentElement);
         this.loadSets();
 
       }
@@ -308,14 +315,14 @@ class Gym {
   }
 
   createTimer() {
-    this.timerCompleted = true
+    this.timerCompleted = true;
     let p = document.createElement('p');
-    p.classList.add('timer')
+    p.id = 'setTimer';
 
-    let div = document.createElement('div')
-    let strong = document.createElement('strong')
+    let div = document.createElement('div');
+    let strong = document.createElement('strong');
 
-    strong.innerText = `Rest Remaining: ${this.currentTime/1000}s`
+    strong.innerText = `Rest Remaining: ${this.currentTime / 1000}s`;
 
     let reset = document.createElement('button');
     reset.id = 'resetTimer';
@@ -325,56 +332,63 @@ class Gym {
     pause.innerHTML = 'Pause Rest';
     pause.id = 'pauseTimer';
 
+    let finish = document.createElement('button');
+    finish.innerHTML = 'Finish Rest';
+    finish.id = 'finishRest';
+
+    finish.addEventListener('click', ev => {
+      this.currentTime = this.restingDefault.value * 60 * 1000;
+      this.timerCompleted = false;
+      this.alarmSound.pause();
+      this.alarmSound.currentTime = 0;
+
+      finish.parentElement.parentElement.removeChild(finish.parentElement);
+    });
+
     pause.addEventListener('click', ev => {
       if (this.activeTimer) {
         clearInterval(this.activeTimer);
-        this.activeTimer = false
+        this.activeTimer = false;
         pause.innerHTML = 'Start';
       } else {
-        console.log('rerunning pause')
+        console.log('rerunning pause');
         pause.innerHTML = 'Pause Rest';
-        this.beginTimer(strong)
+        this.beginTimer(strong);
 
       }
     });
 
     reset.addEventListener('click', () => {
-        clearInterval(this.activeTimer);
-        this.activeTimer = false;
-        this.currentTime = this.defaultCurrentTime
-        strong.innerText = `Rest Remaining: ${this.currentTime/1000}s`
-        pause.innerHTML = 'Start';
+      clearInterval(this.activeTimer);
+      this.activeTimer = false;
+      this.currentTime = this.restingDefault.value * 60 * 1000;
+      strong.innerText = `Rest Remaining: ${this.currentTime / 1000}s`;
+      pause.innerHTML = 'Start';
 
     });
     p.append(strong);
     div.append(reset);
     div.append(pause);
-    p.append(div)
-    this.beginTimer(strong)
-
-
+    p.append(finish);
+    p.append(div);
+    this.beginTimer(strong);
     return p;
   }
 
-
-  beginTimer(strong){
+  beginTimer(strong) {
     this.activeTimer = setInterval(() => {
-      if (this.currentTime === 0) {
-        strong.parentElement.parentElement.removeChild(strong.parentElement)
+      if (this.currentTime === 1000) {
         this.alarmSound.currentTime = 0;
         this.alarmSound.play();
         clearInterval(this.activeTimer);
         this.activeTimer = false;
-        this.timerCompleted = false
+        strong.parentElement.classList.add('finished');
         return;
       }
       this.currentTime -= 1000;
-      strong.innerHTML = `Rest Remaining: ${this.currentTime/1000}s`
-
-
+      strong.innerHTML = `Rest Remaining: ${this.currentTime / 1000}s`;
     }, 1000);
   }
-
 
   generateSet(date, set, exercise) {
     const currentDate = document.getElementById(date);
@@ -404,10 +418,13 @@ class Gym {
 
     p.append(strong);
     p.append(span);
-    p.appendChild(toggleComplete);
-    p.appendChild(removeSet);
-    li.append(p);
 
+    const d = document.createElement('div');
+
+    d.appendChild(toggleComplete);
+    d.appendChild(removeSet);
+    p.appendChild(d);
+    li.append(p);
 
   }
 

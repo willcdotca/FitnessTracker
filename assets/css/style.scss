@@ -4,18 +4,31 @@ html, body, ul, li, header, main, div, button, h1, h2, h3, h4, h5, h6, p, span, 
   font-size: 1.25rem;
   font-family: "Open Sans", serif;
   -webkit-font-smoothing: antialiased;
-
 }
-h1,h2,h3,h4,h5,h6, button, a {
+
+h1, h2, h3, h4, h5, h6, button, a {
   font-family: "Nunito", sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  h1 {
+    font-size: 1.5rem;
+  }
 }
 
 ul, li, header, main, div {
   display: flex;
 }
 
-html, body, ul {
+html, body, ul, div, #sectionContainer, #setContainer, #exerciseContainer, a, #setVideo {
   width: 100%;
+}
+
+input {
+  box-shadow: inset 5px 5px 5px #00000011;
+}
+
+.active {
+  display: flex !important;
 }
 
 body, main, section, ul {
@@ -25,6 +38,7 @@ body, main, section, ul {
 main {
   min-height: calc(90vh - 2rem);
   position: relative;
+
 }
 
 header {
@@ -34,284 +48,350 @@ header {
   height: 10vh;
   align-items: center;
   justify-content: space-between;
-  padding:0 1rem;
-
-}
-
-
-#exerciseBack, #sectionBack, #menuButton {
-  height: 3.2rem;
-  min-width: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  margin: 0;
   padding: 0 1rem;
 
+  nav {
+    display: flex;
+
+    button:not(:first-child) {
+      margin-left: 0.25rem !important;
+    }
+
+    #exerciseBack, #sectionBack, #menuButton {
+      height: 3.2rem;
+      min-width: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      margin: 0;
+      padding: 0 1rem;
+
+    }
+
+    #exerciseBack, #sectionBack {
+      display: none;
+    }
+  }
+
 }
 
-#exerciseBack, #sectionBack {
-  display: none;
-}
-
-nav button:not(:first-child) {
-  margin-left: 0.25rem !important;
-}
-
-nav {
-  display: flex;
-}
 
 #menu {
   height: 90vh;
-  width:100%;
-  position:fixed;
+  width: calc(100% - 2rem);
+  padding: 0 1rem;
+  position: fixed;
   top: 10vh;
-  left:0;
-  background:#eee;
+  left: 0;
+  background: #eee;
   align-items: center;
   justify-content: center;
   display: none;
-}
+  z-index: 10;
 
+  div {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+  }
+  #clearStorage {
+    width:100%;
+    height:100%;
+    padding:1rem 0;
+  }
 
-h1 {
-  font-size: 1.5rem;
 }
 
 
 #sectionContainer, #setContainer, #exerciseContainer {
-  width: 100%;
   outline: 1px black solid;
   height: 100%;
   display: none;
   align-items: center;
   justify-content: center;
-}
 
-#sectionContainer ul, #exerciseContainer ul, #setContainer ul {
-  display: grid;
-  grid-template-rows: repeat(auto-fill, 1fr);
-  min-height: 5vh;
-  width:98%;
-  margin:2.5rem 0 6rem;
-  outline:1px solid #4a6073;
-  box-shadow: 0 10px 10px #00000033;
-
-}
-
-#exercisesList:empty, #setList:empty {
-  display: none;
-  margin:0;
-  padding:0;
-}
-
-#sectionContainer a, #exerciseContainer a {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  outline: 1px solid black;
-  width: 100%;
-  min-height: 6rem;
-  text-decoration: none;
-  transition: background-color 200ms linear;
-  background-color: white;
-  font-size: 2rem;
-  color: blue
-}
-
-#sectionContainer a:hover, #exerciseContainer a:hover {
-  background-color: #eee;
-  color: darkblue;
-}
-
-#addExerciseContainer, #addSetContainer {
-  height: 35vh;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 1rem;
-  background: #ddd;
-  position: fixed;
-  bottom: -40vh;
-  transition: bottom 1s ease-in-out;
-  z-index: 9;
-  box-shadow: 0 0 2rem black;
-  outline: 1px solid white;
-}
-#addExerciseContainer.slideIn, #addSetContainer.slideIn {
-  bottom: 0;
-}
-#addExerciseContainer.slideIn #exerciseSlider, #addSetContainer.slideIn #setSlider {
-  transform: scale(0);
-}
-
-
-
-#exerciseSlider, #setSlider {
-  position: absolute;
-  height:3rem;
-  width:3rem !important;
-  border-radius: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top:-5rem;
-
-  z-index: 10;
-  box-shadow: 0 0 10px #00000033;
-  transform: scale(1);
-  transition: transform 100ms ease-in-out;
-}
-
-#addExerciseContainer input, #addExerciseContainer button, #addSetContainer input, #addSetContainer button {
-  width: 100%;
-  padding: 1rem 0;
-  display: flex;
-  align-self: center;
-  text-align: center;
-  justify-content: center;
-  margin: 0.25rem 0;
-  font-size: 1.5rem
-}
-#addSetContainer div, #addExerciseContainer div {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  gap: 0.25rem;
-  width:calc(100% - 0.25rem);
-}
-input {
-  box-shadow: inset 5px 5px 5px #00000011;
-}
-
-
-.active {
-  display: flex !important;
-}
-
-
-#setHeading, #setDescription {
-  width: calc(100% - 6rem);
-  font-size: 2rem;
-  padding: 1rem 3rem;
-
-}
-#setHeading {
-  padding-bottom:0;
-}
-
-#setDescription {
-  font-size: 1.15rem;
-  justify-content: flex-start;
-
-
-
-}
-
-#setVideo {
-  width: 100%;
-  aspect-ratio: 4/3;
-  display: none
-}
-
-#setList li {
-  flex-direction: column;
-  margin: 1rem;
-  padding: 1rem;
-  outline: 1px solid black;
-  align-items: flex-start;
-
-}
-
-#setList p {
-  display: flex;
-  padding: 0.25rem 0 0.5rem;
-  width: calc(100% - 1.5rem);
-  justify-content: space-between;
-
-}
-#setList li p:not(:last-of-type){
-  border-bottom: 1px solid black;
-}
-
-#setList button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-#emptyExercises, #emptySets {
-  margin: 1rem;
-  width: calc(100% - 2rem);
-  min-height: 30vh;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  body {
-    background-color: #111;
-  }
-  header {
-    background-color: #004A99;
+  ul {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 1fr);
+    min-height: 5vh;
+    width: 98%;
+    margin: 2.5rem 0 6rem;
+    outline: 1px solid #4a6073;
     box-shadow: 0 10px 10px #00000033;
   }
 
-  h1, h2, h3, h4 ,h5 ,h6, button, a{
-    color: #eee;
-  }
-  a, #menu, input  {
-    background: #051923;
-    outline:1px solid #444;
-    border:none;
-    color:#eee;
-
-  }
-
-  button {
-    background: #7c7c7c;
-    color: #eee;
-    border:none
-  }
-
-  input::placeholder, #setDescription {
-    color: #999;
-  }
   a {
-    background-color: #3f3f3f !important;
-    color: #ddd !important;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    outline: 1px solid black;
 
-  }
-  a:hover {
-    background-color: #495867 !important;
-    color:#bdd5ea !important;
-
-  }
-
-  #setList li {
-    background-color: #051923;
-    color:#00a6fb
-  }
-
-  #setList li p:not(:last-of-type) {
-    border-bottom:1px solid white;
+    min-height: 6rem;
+    text-decoration: none;
+    transition: background-color 200ms linear;
+    background-color: white;
+    font-size: 2rem;
+    color: blue
   }
 
 
+  #setHeading, #setDescription {
+    width: calc(100% - 6rem);
+    font-size: 2rem;
+    padding: 1rem 3rem;
 
-  #addExerciseContainer, #addSetContainer{
-    background-color: #283845;
+  }
+
+  #setHeading {
+    padding-bottom: 0;
+  }
+
+  #setDescription {
+    font-size: 1.15rem;
+    justify-content: flex-start;
+
 
   }
 
-  #exerciseContainer, #sectionContainer, #setContainer {
-    outline:none;
+  #setVideo {
+
+    aspect-ratio: 4/3;
+    display: none
+  }
+
+  #sectionContainer a:hover, #exerciseContainer a:hover {
+    background-color: #eee;
+    color: darkblue;
+  }
+
+  #exercisesList:empty, #setList:empty {
+    display: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #addExerciseContainer, #addSetContainer {
+    height: 35vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1rem;
+    background: #ddd;
+    position: fixed;
+    bottom: -40vh;
+    transition: bottom 1s ease-in-out;
+    z-index: 9;
+    box-shadow: 0 0 2rem black;
+    outline: 1px solid white;
+
+    & div {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      gap: 0.25rem;
+      width: calc(100% - 0.25rem);
+    }
+
+    & input, & button {
+      width: 100%;
+      padding: 1rem 0;
+      display: flex;
+      align-self: center;
+      text-align: center;
+      justify-content: center;
+      margin: 0.25rem 0;
+      font-size: 1.5rem
+    }
+
+    &.slideIn {
+      bottom: 0;
+    }
+
+    #addExerciseContainer.slideIn #exerciseSlider, #addSetContainer.slideIn #setSlider {
+      transform: scale(0);
+    }
+
+    #exerciseSlider, #setSlider {
+      position: absolute;
+      height: 5vh;
+      width: 5vh !important;
+      border-radius: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: -10vh;
+      z-index: 10;
+      box-shadow: 0 0 10px #00000033;
+      transform: scale(1);
+      transition: transform 100ms ease-in-out;
+    }
+  }
+
+  #setList {
+    li {
+      flex-direction: column;
+      margin: 1rem;
+      padding: 1rem;
+      outline: 1px solid black;
+      align-items: flex-start;
+
+      p {
+        display: flex;
+        padding: 0.25rem 0 0.5rem;
+        width: 100%;
+        justify-content: space-between;
+
+        &.complete {
+          opacity: 0.2;
+        }
+
+
+        .removeSet, .toggleComplete {
+          width: 2rem;
+          height: 2rem;
+          min-height: unset;
+          cursor: pointer;
+          &.toggleComplete {
+            margin-right:1rem;
+          }
+          &:hover {
+            box-shadow: 0 0 1rem black;
+          }
+
+        }
+        &.complete {
+          .removeSet, .toggleComplete {
+            &.removeSet {
+              cursor: not-allowed;
+            }
+            &:hover {
+              box-shadow: none;
+            }
+          }
+        }
+
+
+        div {
+          width: unset;
+        }
+
+        p:not(:last-of-type) {
+          border-bottom: 1px solid black;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+
+          &:last-of-type {
+            margin-left: 1rem;
+          }
+        }
+
+        &#setTimer.finished #finishRest {
+          display: flex;
+        }
+
+        &#setTimer.finished div, &#setTimer.finished strong {
+          display: none;
+        }
+
+        &#setTimer #finishRest {
+          display: none;
+        }
+
+      }
+
+
+
+    }
+
 
   }
+
+  #emptyExercises, #emptySets {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    min-height: 30vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
 }
+
+
+//@media screen and (prefers-color-scheme: dark) {
+//  body {
+//    background-color: #111;
+//  }
+//  header {
+//    background-color: #004A99;
+//    box-shadow: 0 10px 10px #00000033;
+//  }
+//
+//  h1, h2, h3, h4, h5, h6, button, a {
+//    color: #eee;
+//  }
+//  a, #menu, input {
+//    background: #051923;
+//    outline: 1px solid #444;
+//    border: none;
+//    color: #eee;
+//
+//  }
+//
+//  button {
+//    background: #7c7c7c;
+//    color: #eee;
+//    border: none
+//  }
+//
+//  input::placeholder, #setDescription {
+//    color: #999;
+//  }
+//  a {
+//    background-color: #3f3f3f !important;
+//    color: #ddd !important;
+//
+//  }
+//  a:hover {
+//    background-color: #495867 !important;
+//    color: #bdd5ea !important;
+//
+//  }
+//
+//  #setList li {
+//    background-color: #051923;
+//    color: #00a6fb;
+//
+//    p:not(:last-of-type) {
+//      border-bottom: 1px solid white;
+//    }
+//
+
+//  }
+//
+//
+
+//
+//  #addExerciseContainer, #addSetContainer {
+//    background-color: #283845;
+//
+//  }
+//
+//
+//  #exerciseContainer, #sectionContainer, #setContainer {
+//    outline: none;
+//
+//  }
+//}

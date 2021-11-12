@@ -22,21 +22,28 @@
 <main>
 
     <section id="menu">
-        <label for="resting">Rest Duration (seconds)
-        <input type="number" min="1" max="10" id="resting" step="0.5" />
-        </label>
+<div>
+        <label for="restingDefault">Rest Duration (seconds)
+
+        </label><input type="number" min="1" max="3" id="restingDefault" step="0.5" value="1.5" />
+</div><div>
         <label for="darkMode">Dark Mode
-            <input type="checkbox" id="darkMode" />
-        </label>
+
+        </label><input type="checkbox" id="darkMode" />
+    </div><div>
         <label for="weightType">
-            <select name="weightType" id="weightType">
-                <option value="kgs" selected>KG</option>
-                <option value="lbs">LG</option>
-            </select>
+
         </label>
+        <select name="weightType" id="weightType">
+            <option value="kgs" selected>KG</option>
+            <option value="lbs">LG</option>
+        </select>
+    </div><div>
+        <label for="clearStorage">
 
-            <button id="clearStorage" >Clear LocalStorage </button>
-
+        </label>
+        <button id="clearStorage" >Clear LocalStorage </button>
+    </div>
     </section>
 
     <section id="sectionContainer" class="active">
@@ -105,10 +112,12 @@
 
 <!--
 //TODO Sort By Date
-//TODO Add Dark/Light Theme Override Toggle - https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/
+
 //TODO Clean up SCSS/CSS
+
 //TODO Style Menu Content
-//TODO Update Set/Rest Counter
+//TODO Add Dark/Light Theme Override Toggle - https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/
+
 
 -->
 
