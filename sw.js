@@ -1,7 +1,7 @@
-let cacheName = "OpenGithubPWA";// 👈 any unique name
+let cacheName = "FitnessTracker";
 
 let filesToCache = [
-  "/GymApp/", // 👈 your repository name , both slash are important
+  "/FitnessTracker/",
   "sw.js",
   "assets/media/alarm.mp3",
   "manifest.json",
@@ -10,41 +10,18 @@ let filesToCache = [
   "assets/img/icon_512.png"
 ];
 
-self.addEventListener("install", function (event) {
-  event.waitUntil(caches.open(cacheName).then((cache) => {
-    console.log('installed successfully')
-    return cache.addAll(filesToCache);
-  }));
+self.addEventListener("install", event=>
+    event.waitUntil(caches.open(cacheName).then((cache) =>cache.addAll(filesToCache)))
+)
+
+self.addEventListener('fetch', event=> {
+  if (event.request.url.includes('clean-cache')) caches.delete(cacheName).then(isDeleted=>console.log('Cache cleared'))
+  event.respondWith(caches.match(event.request).then(response=>response || fetch(event.request)));
 });
 
-self.addEventListener('fetch', function (event) {
-
-  if (event.request.url.includes('clean-cache')) {
-    caches.delete(cacheName);
-    console.log('Cache cleared')
-  }
-
-  event.respondWith(caches.match(event.request).then(function (response) {
-        if (response) {
-          console.log('served form cache')
-        } else {
-          console.log('Not serving from cache ', event.request.url)
-        }
-        return response || fetch(event.request);
-      })
-  );
-});
-
-self.addEventListener('activate', function (e) {
-  e.waitUntil(
-      caches.keys().then(function (keyList) {
-        return Promise.all(keyList.map(function (key) {
-          if (key !== cacheName) {
-            console.log('service worker: Removing old cache', key);
-            return caches.delete(key);
-          }
-        }));
-      })
+self.addEventListener('activate', e=> {
+  e.waitUntil(caches.keys().then( keyList=>
+      Promise.all(keyList.map(key=> { if (key !== cacheName) return caches.delete(key)})))
   );
   return self.clients.claim();
 });
